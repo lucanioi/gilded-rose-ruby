@@ -120,6 +120,16 @@ describe GildedRose do
           end
         end
       end
+
+      context 'Conjured items' do
+        it 'degrades in quality twice as fast' do
+            test_update_quality_for 'Conjured Cake', 5, 20 do
+              {
+                quality: 18
+              }
+            end
+        end
+      end
     end
   end
 

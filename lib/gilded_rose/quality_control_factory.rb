@@ -2,6 +2,7 @@ require_relative 'quality_control/quality_control'
 require_relative 'quality_control/aged_brie_quality_control'
 require_relative 'quality_control/sulfura_quality_control'
 require_relative 'quality_control/backstage_pass_quality_control'
+require_relative 'quality_control/conjured_quality_control'
 
 module GildedRose
   module QualityControlFactory
@@ -15,6 +16,8 @@ module GildedRose
         SulfuraQualityControl.new
       when /backstage pass/i
         BackstagePassQualityControl.new
+      when /conjured/i
+        ConjuredQualityControl.new
       else
         QualityControl.new
       end
