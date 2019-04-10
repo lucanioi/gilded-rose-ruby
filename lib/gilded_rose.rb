@@ -1,55 +1,19 @@
-require_relative 'item'
+require_relative 'gilded_rose/item'
+require_relative 'gilded_rose/quality_control_factory'
 
-class GildedRose
-  def initialize(items)
-    @items = items
-  end
+module GildedRose
+  class GildedRose
+    def initialize(items)
+      @items = items
+    end
 
-  def update_quality
-    @items.each do |item|
-      if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
-        if item.quality > 0
-          if item.name != "Sulfuras, Hand of Ragnaros"
-            item.quality = item.quality - 1
-          end
-        end
-      else
-        if item.quality < 50
-          item.quality = item.quality + 1
-          if item.name == "Backstage passes to a TAFKAL80ETC concert"
-            if item.sell_in < 11
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-            if item.sell_in < 6
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-          end
-        end
-      end
-      if item.name != "Sulfuras, Hand of Ragnaros"
-        item.sell_in = item.sell_in - 1
-      end
-      if item.sell_in < 0
-        if item.name != "Aged Brie"
-          if item.name != "Backstage passes to a TAFKAL80ETC concert"
-            if item.quality > 0
-              if item.name != "Sulfuras, Hand of Ragnaros"
-                item.quality = item.quality - 1
-              end
-            end
-          else
-            item.quality = item.quality - item.quality
-          end
-        else
-          if item.quality < 50
-            item.quality = item.quality + 1
-          end
-        end
-      end
+    def update_quality
+      @items.map &method(:update_quality_for_item)
+    end
+
+    def update_quality_for_item(item)
+      quality_control = QualityControlFactory.for_item(item)
+      quality_control.update(item)
     end
   end
 end

@@ -124,8 +124,8 @@ describe GildedRose do
   end
 
   def test_update_quality_for(name, value, quality, days: 1, &blk)
-    item = Item.new(name, value, quality)
-    gilded_rose = GildedRose.new([item])
+    item = GildedRose::Item.new(name, value, quality)
+    gilded_rose = GildedRose::GildedRose.new([item])
 
     days.times { gilded_rose.update_quality }
 
