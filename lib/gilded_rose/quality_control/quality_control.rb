@@ -8,6 +8,8 @@ module GildedRose
       update_sell_in(item)
     end
 
+    private
+
     def update_quality(item)
       unless item.quality <= MINIMUM_QUALITY
         item.quality += quality_change_value(item)
